@@ -1,5 +1,5 @@
 name: build-and-package
-on: [push]
+on: [push, pull_request]
 jobs:
   build_and_upload:
     runs-on: ubuntu-latest
@@ -9,17 +9,19 @@ jobs:
         with:
           submodules: 'recursive'
       
-      # setup-javaは依存関係のcasheもしてくれる
+      # setup-javaは依存関係のcacheもしてくれる
       - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           java-version: ${{ secrets.JAVA_VERSION }}
           cache: 'maven'
           distribution: 'adopt'
-      
+
+      # pomに基づいてビルド & ./target の中身を ~/artifacts へコピー
       - name: Build with Maven and copy artifacts
         run: mvn -B package -f pom.xml && mkdir ~/artifacts && cp target/*.jar ~/artifacts
 
+      # jarファイルのみをアップロード
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
