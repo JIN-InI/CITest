@@ -19,6 +19,8 @@ jobs:
       
       - name: Build with Maven
         run: mvn -B package -f pom.xml
+
+      - name: Copy to target
         run: mkdir target && cp target/*.jar target
 
       - name: Upload artifact
