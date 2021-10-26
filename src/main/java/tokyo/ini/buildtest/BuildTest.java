@@ -7,7 +7,7 @@ public final class BuildTest extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
+        getServer().getLogger().info("Hello World!");
     }
 
     @Override
