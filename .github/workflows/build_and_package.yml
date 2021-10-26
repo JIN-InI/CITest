@@ -17,12 +17,12 @@ jobs:
           cache: 'maven'
           distribution: 'adopt'
       
-      - name: Build with Maven and copy artifact
-        run: mvn -B package -f pom.xml && mkdir ~/target && cp target/*.jar ~/target
+      - name: Build with Maven and copy artifacts
+        run: mvn -B package -f pom.xml && mkdir ~/artifacts && cp target/*.jar ~/artifacts
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
-          name: Package
-          path: target
+          name: Artifact-jar
+          path: ~/artifacts/*
           
