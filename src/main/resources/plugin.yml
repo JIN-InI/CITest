@@ -1,0 +1,5 @@
+name: BuildTest
+version: '${project.version}'
+main: tokyo.ini.buildtest.BuildTest
+api-version: 1.17
+load: STARTUP
