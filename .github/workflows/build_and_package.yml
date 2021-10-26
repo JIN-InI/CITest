@@ -1,0 +1,36 @@
+name: build-and-package
+on: [push]
+jobs:
+  build_and_upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+      
+      # setup-javaは依存関係のcasheもしてくれる
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: ${{ secrets.JAVA_VERSION }}
+          cache: 'maven'
+          distribution: 'adopt'
+
+      # - name: Cache dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ~/.m2/repository
+      #     key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-maven-
+      
+      - name: Build with Maven
+        run: mvn -B package -f pom.xml
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Spigot-Plugin-build
+          path: target/build/${{ secrets.JAR_NAME }}.jar
+          
