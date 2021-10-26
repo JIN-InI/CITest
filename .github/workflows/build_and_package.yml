@@ -18,7 +18,7 @@ jobs:
           distribution: 'adopt'
       
       - name: Build with Maven and copy artifact
-        run: mvn -B package -f pom.xml && mkdir ~/target && cp target/*.jar target
+        run: mvn -B package -f pom.xml && mkdir ~/target && cp target/*.jar ~/target
 
       - name: Upload artifact
         uses: actions/upload-artifact@v2
